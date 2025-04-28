@@ -10,9 +10,9 @@ export default class Board extends React.Component {
     const clients = this.getClients();
     this.state = {
       clients: {
-        backlog: clients.filter((client) => !client.status || client.status === "backlog"),
-        inProgress: clients.filter((client) => client.status && client.status === "in-progress"),
-        complete: clients.filter((client) => client.status && client.status === "complete"),
+        backlog: clients.map((client) => ({ ...client, status: "backlog" })),
+        inProgress: [],
+        complete: [],
       },
     };
     this.swimlanes = {
@@ -150,9 +150,15 @@ export default class Board extends React.Component {
       <div className="Board">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-4">{this.renderSwimlane("Backlog", this.state.clients.backlog, this.swimlanes.backlog)}</div>
-            <div className="col-md-4">{this.renderSwimlane("In Progress", this.state.clients.inProgress, this.swimlanes.inProgress)}</div>
-            <div className="col-md-4">{this.renderSwimlane("Complete", this.state.clients.complete, this.swimlanes.complete)}</div>
+            <div className="col-md-4 Swimlane-column">
+              {this.renderSwimlane("Backlog", this.state.clients.backlog, this.swimlanes.backlog)}
+            </div>
+            <div className="col-md-4 Swimlane-column">
+              {this.renderSwimlane("In Progress", this.state.clients.inProgress, this.swimlanes.inProgress)}
+            </div>
+            <div className="col-md-4 Swimlane-column">
+              {this.renderSwimlane("Complete", this.state.clients.complete, this.swimlanes.complete)}
+            </div>
           </div>
         </div>
       </div>
